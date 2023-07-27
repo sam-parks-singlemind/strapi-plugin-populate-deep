@@ -14,7 +14,7 @@ module.exports = ({ strapi }) => {
 
         let flat = []
         if (populate[2] && populate[2] === 'flat') {
-          ignore = populate.slice(3)
+          flat = populate.slice(3)
         }
 
         const modelObject = getFullPopulateObject(event.model.uid, depth, [], flat);

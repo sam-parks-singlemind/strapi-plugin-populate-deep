@@ -9,7 +9,7 @@ const getModelPopulationAttributes = (model) => {
   return model.attributes;
 };
 
-const getFullPopulateObject = (modelUid, maxDepth = 20, ignore) => {
+const getFullPopulateObject = (modelUid, maxDepth = 20, ignore, flat) => {
   const skipCreatorFields = strapi.plugin('strapi-plugin-populate-deep')?.config('skipCreatorFields');
 
   if (maxDepth <= 1) {
@@ -26,6 +26,10 @@ const getFullPopulateObject = (modelUid, maxDepth = 20, ignore) => {
     getModelPopulationAttributes(model)
   )) {
     if (ignore?.includes(key)) continue
+    if(flat?.includes(key)) {
+      populate[key] = true
+      continue
+    } 
     if (value) {
       if (value.type === "component") {
         populate[key] = getFullPopulateObject(value.component, maxDepth - 1);

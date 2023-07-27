@@ -12,12 +12,12 @@ module.exports = ({ strapi }) => {
       if (populate && populate[0] === 'deep') {
         const depth = populate[1] ?? defaultDepth
 
-        let ignore = []
-        if (populate[2] && populate[2] === 'ignore') {
+        let flat = []
+        if (populate[2] && populate[2] === 'flat') {
           ignore = populate.slice(3)
         }
 
-        const modelObject = getFullPopulateObject(event.model.uid, depth, ignore);
+        const modelObject = getFullPopulateObject(event.model.uid, depth, [], flat);
         event.params.populate = modelObject.populate
       }
     }
